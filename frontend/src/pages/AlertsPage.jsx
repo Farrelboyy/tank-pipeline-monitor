@@ -95,7 +95,7 @@ export default function AlertsPage() {
           <div>
             <h1 style={{ fontSize: 22, fontWeight: 700 }}>Active Alerts</h1>
             <p style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>
-              Threshold violations — refreshed every 5s
+              Threshold violations - refreshed every 5s
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -113,7 +113,17 @@ export default function AlertsPage() {
           </div>
         ) : alerts.length === 0 ? (
           <div className="card" style={{ padding: 60, textAlign: 'center' }}>
-            <div style={{ fontSize: 40, marginBottom: 12 }}>✅</div>
+            <div style={{
+              width: 48, height: 48,
+              borderRadius: '50%',
+              background: 'var(--normal-dim)',
+              border: '2px solid var(--normal)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              margin: '0 auto 16px',
+              fontSize: 22,
+              color: 'var(--normal)',
+              fontWeight: 700,
+            }}>OK</div>
             <p style={{ color: 'var(--normal)', fontWeight: 600, fontSize: 16 }}>All systems normal</p>
             <p style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 6 }}>No active threshold violations detected</p>
           </div>

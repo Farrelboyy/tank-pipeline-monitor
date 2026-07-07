@@ -51,8 +51,8 @@ export default function TankDetailPage() {
         ])
         setTank(current)
         setHistory(histData.readings || [])
-      } catch (err) {
-        console.error(err)
+      } catch {
+        // silently handled by Axios interceptor
       } finally {
         setLoading(false)
       }
@@ -77,7 +77,7 @@ export default function TankDetailPage() {
         {/* Tank header */}
         {tank && (
           <div style={{ marginBottom: 24 }}>
-            <h1 style={{ fontSize: 22, fontWeight: 700 }}>{tank.name} — Detail View</h1>
+            <h1 style={{ fontSize: 22, fontWeight: 700 }}>{tank.name}: Detail View</h1>
             <p style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 4 }}>
               {tank.location} · Capacity: {tank.capacity_liters?.toLocaleString()} L
             </p>
@@ -127,7 +127,7 @@ export default function TankDetailPage() {
         ) : (
           <RealtimeChart
             data={history}
-            title={`${tank?.name} — Last ${preset >= 24 ? `${preset / 24}d` : `${preset}h`} (${history.length} readings)`}
+            title={`Sensor History: ${tank?.name} - Last ${preset >= 24 ? `${preset / 24}d` : `${preset}h`} (${history.length} readings)`}
           />
         )}
       </main>

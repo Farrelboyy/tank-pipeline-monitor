@@ -1,7 +1,6 @@
 /**
  * RealtimeChart.jsx
- * Recharts LineChart that shows last N readings for all 3 parameters.
- * Accepts `data` prop (array of sensor_reading rows) and re-renders on prop change.
+ * Recharts LineChart with theme-aware colors via CSS custom properties.
  */
 
 import {
@@ -11,20 +10,21 @@ import {
 import { format } from 'date-fns'
 
 const LINES = [
-  { key: 'temperature',   label: 'Temp (°C)',    color: '#00d2ff' },
+  { key: 'temperature',   label: 'Temp (C)',      color: '#00d2ff' },
   { key: 'pressure',      label: 'Pressure (bar)', color: '#a78bfa' },
-  { key: 'level_percent', label: 'Level (%)',      color: '#34d399' },
+  { key: 'level_percent', label: 'Level (%)',       color: '#34d399' },
 ]
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
     <div style={{
-      background: '#1a2540',
+      background: 'var(--chart-tooltip)',
       border: '1px solid var(--border-accent)',
       borderRadius: 10,
       padding: '10px 14px',
       fontSize: 12,
+      boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
     }}>
       <p style={{ color: 'var(--text-2)', marginBottom: 6 }}>{label}</p>
       {payload.map(p => (
@@ -49,23 +49,21 @@ export default function RealtimeChart({ data = [], title = 'Sensor Readings' }) 
       </h3>
       <ResponsiveContainer width="100%" height={260}>
         <LineChart data={formatted} margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
           <XAxis
             dataKey="time"
-            tick={{ fill: '#4a6080', fontSize: 10 }}
+            tick={{ fill: 'var(--chart-tick)', fontSize: 10 }}
             tickLine={false}
             axisLine={false}
             interval="preserveStartEnd"
           />
           <YAxis
-            tick={{ fill: '#4a6080', fontSize: 10 }}
+            tick={{ fill: 'var(--chart-tick)', fontSize: 10 }}
             tickLine={false}
             axisLine={false}
           />
           <Tooltip content={<CustomTooltip />} />
-          <Legend
-            wrapperStyle={{ fontSize: 12, paddingTop: 12, color: 'var(--text-2)' }}
-          />
+          <Legend wrapperStyle={{ fontSize: 12, paddingTop: 12, color: 'var(--text-2)' }} />
           {LINES.map(l => (
             <Line
               key={l.key}

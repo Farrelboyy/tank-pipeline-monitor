@@ -23,18 +23,19 @@ export default function LoginPage() {
       padding: 24,
       position: 'relative',
       overflow: 'hidden',
+      transition: 'background 0.25s',
     }}>
-      {/* Background glow blobs */}
+      {/* Background glow blobs - dark mode only visible via opacity */}
       <div style={{
         position: 'absolute', width: 500, height: 500,
         borderRadius: '50%', top: -100, left: -150,
-        background: 'radial-gradient(circle, rgba(0,210,255,0.06), transparent 70%)',
+        background: 'radial-gradient(circle, var(--accent-dim), transparent 70%)',
         pointerEvents: 'none',
       }} />
       <div style={{
         position: 'absolute', width: 400, height: 400,
         borderRadius: '50%', bottom: -80, right: -100,
-        background: 'radial-gradient(circle, rgba(167,139,250,0.05), transparent 70%)',
+        background: 'radial-gradient(circle, rgba(167,139,250,0.04), transparent 70%)',
         pointerEvents: 'none',
       }} />
 
@@ -45,17 +46,18 @@ export default function LoginPage() {
         position: 'relative',
       }}>
         {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: 36 }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <div style={{
-            width: 56, height: 56,
-            background: 'linear-gradient(135deg, #00d2ff22, #00d2ff44)',
+            width: 48, height: 48,
+            background: 'var(--accent-dim)',
             border: '1px solid var(--border-accent)',
-            borderRadius: 14,
+            borderRadius: 12,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 24, margin: '0 auto 16px',
-          }}>⬡</div>
+            fontSize: 20, fontWeight: 700, color: 'var(--accent)',
+            margin: '0 auto 16px',
+          }}>T</div>
           <h1 style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.5px' }}>
-            Tank & Pipeline Monitor
+            Tank &amp; Pipeline Monitor
           </h1>
           <p style={{ color: 'var(--text-3)', fontSize: 13, marginTop: 6 }}>
             Industrial sensor simulation dashboard
@@ -65,7 +67,11 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-2)', marginBottom: 6, letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+            <label style={{
+              display: 'block', fontSize: 12, fontWeight: 600,
+              color: 'var(--text-2)', marginBottom: 6,
+              letterSpacing: '0.5px', textTransform: 'uppercase',
+            }}>
               Username
             </label>
             <input
@@ -81,14 +87,18 @@ export default function LoginPage() {
           </div>
 
           <div>
-            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-2)', marginBottom: 6, letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+            <label style={{
+              display: 'block', fontSize: 12, fontWeight: 600,
+              color: 'var(--text-2)', marginBottom: 6,
+              letterSpacing: '0.5px', textTransform: 'uppercase',
+            }}>
               Password
             </label>
             <input
               id="password"
               className="input"
               type="password"
-              placeholder="••••••"
+              placeholder="Enter password"
               autoComplete="current-password"
               value={form.password}
               onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
@@ -105,7 +115,7 @@ export default function LoginPage() {
               fontSize: 13,
               color: 'var(--danger)',
             }}>
-              ⚠ {error}
+              {error}
             </div>
           )}
 
@@ -116,12 +126,28 @@ export default function LoginPage() {
             style={{ width: '100%', justifyContent: 'center', marginTop: 4, padding: '13px 20px' }}
             disabled={loading}
           >
-            {loading ? 'Signing in…' : 'Sign In →'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-3)', marginTop: 24 }}>
+        {/* Demo credentials hint */}
+        <p style={{ textAlign: 'center', fontSize: 11, color: 'var(--text-3)', marginTop: 20 }}>
           Demo credentials: admin / admin
+        </p>
+
+        {/* Demo notice */}
+        <p style={{
+          textAlign: 'center',
+          fontSize: 11,
+          color: 'var(--text-3)',
+          marginTop: 20,
+          lineHeight: 1.6,
+          padding: '12px 8px',
+          borderTop: '1px solid var(--border)',
+        }}>
+          This is a simulated monitoring dashboard for demonstration purposes only.
+          All sensor data is synthetically generated and does not represent real
+          industrial equipment.
         </p>
       </div>
     </div>

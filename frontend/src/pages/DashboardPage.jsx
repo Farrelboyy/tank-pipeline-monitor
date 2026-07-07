@@ -107,7 +107,7 @@ export default function DashboardPage() {
         {chartData.length > 0 && (
           <RealtimeChart
             data={chartData}
-            title="Tank A — Real-time Sensor Trend (last 30 readings)"
+            title="Sensor Trend Analysis: Tank A (Last 30 Readings)"
           />
         )}
       </main>
