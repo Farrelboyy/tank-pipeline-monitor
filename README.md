@@ -12,7 +12,7 @@ The application generates synthetic sensor data every 5 seconds for five tanks, 
 ![Dashboard Overview](docs/screenshots/dashboard-overview.png)
 
 ### Tank Detail with Historical Chart
-![Tank Detail](docs/screenshots/tank-detail.png)
+![Tank Detail](docs/screenshots/tank-detail-view.png)
 
 ### Alerts Page
 ![Alerts Page](docs/screenshots/alerts-page.png)
