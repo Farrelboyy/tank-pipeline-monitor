@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { format, subHours } from 'date-fns'
 import Navbar from '../components/Navbar'
 import RealtimeChart from '../components/RealtimeChart'
+import { useNotification } from '../context/NotificationContext'
 import { tanksAPI, alertsAPI } from '../services/api'
 
 const PRESETS = [
@@ -31,10 +32,11 @@ export default function TankDetailPage() {
   const [alertCount, setAlertCount] = useState(0)
   const [loading,   setLoading]   = useState(true)
   const [preset,    setPreset]    = useState(6) // hours
+  const { getUnreadCount } = useNotification()
 
   useEffect(() => {
-    alertsAPI.getAll().then(d => setAlertCount(d.length)).catch(() => {})
-  }, [])
+    alertsAPI.getAll().then(d => setAlertCount(getUnreadCount(d))).catch(() => {})
+  }, [getUnreadCount])
 
   useEffect(() => {
     async function load() {

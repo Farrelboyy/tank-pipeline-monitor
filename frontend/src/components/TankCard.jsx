@@ -130,15 +130,18 @@ export default function TankCard({ tank }) {
           </span>
         </div>
         <div style={{
-          height: 6, background: 'var(--bg-surface)',
+          height: 6, background: 'var(--bg-card-2)',
           borderRadius: 3, overflow: 'hidden',
+          boxShadow: 'none',
+          transition: 'background 0.25s',
         }}>
           <div style={{
             height: '100%',
             width: `${levelPct}%`,
             background: `linear-gradient(90deg, ${statusColor[lStatus]}, ${statusColor[lStatus]}99)`,
             borderRadius: 3,
-            transition: 'width 1s ease',
+            transition: 'width 1s ease, box-shadow 0.25s',
+            boxShadow: 'none',
           }} />
         </div>
       </div>

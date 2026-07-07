@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { format } from 'date-fns'
 import Navbar from '../components/Navbar'
+import { useNotification } from '../context/NotificationContext'
 import { alertsAPI } from '../services/api'
 
 const SEVERITY_STYLE = {
@@ -71,14 +72,16 @@ function AlertRow({ alert, index }) {
 export default function AlertsPage() {
   const [alerts,  setAlerts]  = useState([])
   const [loading, setLoading] = useState(true)
+  const { markViewed } = useNotification()
 
   const load = useCallback(async () => {
     try {
       const data = await alertsAPI.getAll()
       setAlerts(data)
+      markViewed()
     } catch { /* ignore */ }
     finally { setLoading(false) }
-  }, [])
+  }, [markViewed])
 
   useEffect(() => {
     load()
@@ -88,7 +91,7 @@ export default function AlertsPage() {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      <Navbar alertCount={alerts.length} />
+      <Navbar alertCount={0} />
 
       <main style={{ maxWidth: 1440, margin: '0 auto', padding: '28px 24px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24 }}>
@@ -135,8 +138,9 @@ export default function AlertsPage() {
               gridTemplateColumns: '1fr 140px 100px 100px 140px',
               gap: 12,
               padding: '10px 20px',
-              background: 'var(--bg-surface)',
+              background: 'var(--bg-card-2)',
               borderBottom: '1px solid var(--border)',
+              transition: 'background 0.25s',
             }}>
               {['Tank / Parameter', 'Value', 'Threshold', 'Severity', 'Triggered At'].map(h => (
                 <span key={h} style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{h}</span>

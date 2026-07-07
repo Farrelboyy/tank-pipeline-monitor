@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import Navbar from '../components/Navbar'
+import { useNotification } from '../context/NotificationContext'
 import TankCard from '../components/TankCard'
 import RealtimeChart from '../components/RealtimeChart'
 import { tanksAPI, alertsAPI } from '../services/api'
@@ -10,8 +11,10 @@ export default function DashboardPage() {
   const [tanks,       setTanks]       = useState([])
   const [chartData,   setChartData]   = useState([]) // recent readings for chart
   const [alertCount,  setAlertCount]  = useState(0)
+  const [unreadAlerts, setUnreadAlerts] = useState(0)
   const [loading,     setLoading]     = useState(true)
-  const [lastUpdate,  setLastUpdate]  = useState(null)
+  const [currentTime, setCurrentTime] = useState(new Date())
+  const { getUnreadCount } = useNotification()
 
   // Keep last 30 readings per tank merged for the overview chart
   const buildChartData = useCallback(async () => {
@@ -30,7 +33,7 @@ export default function DashboardPage() {
       ])
       setTanks(tanksData)
       setAlertCount(alertsData.length)
-      setLastUpdate(new Date())
+      setUnreadAlerts(getUnreadCount(alertsData))
     } catch {
       // Network errors are handled by the Axios interceptor (auto-logout on 401/403)
     } finally {
@@ -48,9 +51,16 @@ export default function DashboardPage() {
     return () => clearInterval(interval)
   }, [fetchAll, buildChartData])
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <div style={{ minHeight: '100vh' }}>
-      <Navbar alertCount={alertCount} />
+      <Navbar alertCount={unreadAlerts} />
 
       <main style={{ maxWidth: 1440, margin: '0 auto', padding: '28px 24px' }}>
         {/* Header */}
@@ -63,11 +73,11 @@ export default function DashboardPage() {
               5 tanks monitored in real-time · auto-refresh every 5s
             </p>
           </div>
-          {lastUpdate && (
+          {currentTime && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <div className="pulse-dot" />
               <span style={{ fontSize: 12, color: 'var(--text-3)', fontFamily: 'var(--font-mono)' }}>
-                {lastUpdate.toLocaleTimeString()}
+                {currentTime.toLocaleTimeString()}
               </span>
             </div>
           )}

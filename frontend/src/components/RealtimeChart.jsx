@@ -8,6 +8,7 @@ import {
   Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { format } from 'date-fns'
+import { memo } from 'react'
 
 const LINES = [
   { key: 'temperature',   label: 'Temp (C)',      color: '#00d2ff' },
@@ -36,7 +37,7 @@ function CustomTooltip({ active, payload, label }) {
   )
 }
 
-export default function RealtimeChart({ data = [], title = 'Sensor Readings' }) {
+export default memo(function RealtimeChart({ data = [], title = 'Sensor Readings' }) {
   const formatted = data.map(r => ({
     ...r,
     time: format(new Date(r.recorded_at), 'HH:mm:ss'),
@@ -62,7 +63,7 @@ export default function RealtimeChart({ data = [], title = 'Sensor Readings' }) 
             tickLine={false}
             axisLine={false}
           />
-          <Tooltip content={<CustomTooltip />} />
+          <Tooltip content={<CustomTooltip />} isAnimationActive={false} />
           <Legend wrapperStyle={{ fontSize: 12, paddingTop: 12, color: 'var(--text-2)' }} />
           {LINES.map(l => (
             <Line
@@ -74,10 +75,11 @@ export default function RealtimeChart({ data = [], title = 'Sensor Readings' }) 
               strokeWidth={2}
               dot={false}
               activeDot={{ r: 4, strokeWidth: 0 }}
+              isAnimationActive={false}
             />
           ))}
         </LineChart>
       </ResponsiveContainer>
     </div>
   )
-}
+})
