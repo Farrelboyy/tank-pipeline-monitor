@@ -31,8 +31,8 @@ export default function DashboardPage() {
       setTanks(tanksData)
       setAlertCount(alertsData.length)
       setLastUpdate(new Date())
-    } catch (err) {
-      console.error('[Dashboard] fetch error', err)
+    } catch {
+      // Network errors are handled by the Axios interceptor (auto-logout on 401/403)
     } finally {
       setLoading(false)
     }

@@ -6,6 +6,19 @@ The application generates synthetic sensor data every 5 seconds for five tanks, 
 
 ---
 
+## Screenshots
+
+### Dashboard Overview
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+
+### Tank Detail with Historical Chart
+![Tank Detail](docs/screenshots/tank-detail.png)
+
+### Alerts Page
+![Alerts Page](docs/screenshots/alerts-page.png)
+
+---
+
 ## Tech Stack
 
 | Layer | Technology |
@@ -175,6 +188,8 @@ Open your browser and navigate to `http://localhost:5173`. Use the credentials b
 |---|---|
 | Username | admin |
 | Password | admin |
+
+> **Note:** These default credentials are for demonstration purposes only and should never be used in a production environment.
 
 ---
 
